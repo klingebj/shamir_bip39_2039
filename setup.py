@@ -2,5 +2,6 @@
 
 from distutils.core import setup
 setup(
-name='shamir-bip39'
+    name='shamir_bip39',
+    packages=['shamir_bip39']
 )

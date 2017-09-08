@@ -1,7 +1,7 @@
-# shamir-bip39
+# shamir_bip39
 A simple implementation of the 2-out-of-3 Shamir's secret sharing algorithm (SSSA) for BIP39-like mnemonics
 
-# Overview
+## Overview
 
 Rather than full-featured this is meant to be a short and extremely simple implementation that you can (actually) audit in its entirety and trust with your private keys. The only libraries used are *sys* and *random*, and these are only used for random number generation. If you don't trust your system RNG you can supply your own.
 
@@ -11,7 +11,7 @@ The code breaks up a mnemonic into three SSSA shares that are also each themselv
 
 The blacklist: "year", "yellow", "you", "young", "youth", "zebra", "zero", "zone", and "zoo"
 
-# Examples
+## Examples
 
 You can use an existing mnemonic or create a new one
 
@@ -28,7 +28,7 @@ The mnemonic can then be broken into three shares, which are themselves mnemonic
 
 ```
 shares = mnemonic_to_shares(mnemonic)
-print "\nShares:", shares
+print "Shares:", shares
 ```
 
 ```
@@ -40,7 +40,7 @@ Shares: {'share1': ['lazy', 'dizzy', 'viable', 'impulse'],
 Finally, the original mnemonic can be recovered from any two of the three shares
 
 ```
-print "\nRecovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
+print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
 print "Recovered from shares 1 and 3:", shares_to_mnemonic(share1=shares['share1'], share3=shares['share3'])
 print "Recovered from shares 2 and 3:", shares_to_mnemonic(share2=shares['share2'], share3=shares['share3'])
 ```
