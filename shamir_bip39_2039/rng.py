@@ -23,3 +23,19 @@ class SystemRNG(RNG):
     def random_int(self):
         """Generate a random integer"""
         return self.rng.randint(0, self.max_int)
+
+class LCG(RNG):
+    """LCG for testing. DO NOT USE FOR GENERATING KEYS"""
+
+    def __init__(self, max_int=None):
+
+        if max_int is None:
+            max_int = sys.maxint
+        self.max_int = max_int
+        self.seed = 42
+
+    def random_int(self):
+        """Generate a random integer"""
+        self.seed = (self.seed * 1664525 + 1013904223) % 2**32
+        return self.seed % self.max_int
+        
