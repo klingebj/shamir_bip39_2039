@@ -44,10 +44,10 @@ print "Shares:", shares
 ```
 Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
                     'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
-         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column',
-	            'silver', 'forest', 'extra', 'hand', 'neither', 'accident'],
-         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret',
-	            'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd']}
+         'share2': ['teach', 'initial', 'aware', 'fan', 'give', 'regret',
+	            'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd'],
+         'share3': ['lava', 'power', 'throw', 'demise', 'safe', 'column',
+	            'silver', 'forest', 'extra', 'hand', 'neither', 'accident']}
 ```
 
 Recall that each of these shares is also a valid BIP39-2039 mnemonic! Finally, the original mnemonic can be recovered from any two of the three shares

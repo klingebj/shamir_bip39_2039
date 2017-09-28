@@ -10,7 +10,7 @@ def bits_to_mnemonic(bitstring):
     """Convert a bitstring to a mnemonic"""
     
     n = len(bitstring) / 11
-    return [word_dict[int(bitstring[(11*i):(i+1)*11],2)+1] for i in range(n)]
+    return [word_dict[int(bitstring[(i*11):(i+1)*11],2)+1] for i in range(n)]
 
 def compute_mnemonic_lengths(len_bits):
     """Compute valid lengths for the components of mnemonics"""

@@ -13,10 +13,10 @@ print "Shares valid mnemonics?", check_mnemonic_checksum(shares['share1']) and c
 print "\nShares:", shares
 #Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
 #                    'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
-#         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column', 'silver',
-#                    'forest', 'extra', 'hand', 'neither', 'accident'],
-#         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret', 'analyst',
-#                    'pitch', 'private', 'control', 'vintage', 'absurd']}
+#         'share2': ['teach', 'initial', 'aware', 'fan', 'give', 'regret',
+#                    'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd'],
+#         'share3': ['lava', 'power', 'throw', 'demise', 'safe', 'column',
+#                    'silver', 'forest', 'extra', 'hand', 'neither', 'accident']}
 
 print "\nRecovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
 #Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
