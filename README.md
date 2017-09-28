@@ -11,7 +11,7 @@ The code breaks up a mnemonic into three SSS shares that are also each themselve
 
 The package uses what we will call the 'BIP39-2039' mnemonics.
 
-- BIP39-2039 mnemonics use a dictionary of size 2039 (a prime number) than of size 2048 (used in BIP39 mnemonics)
+- BIP39-2039 mnemonics use a dictionary of size 2039 (a prime number) instead of size 2048 (used in BIP39 mnemonics)
 - All BIP39-2039 mnemonics are valid BIP39 mnemonics (so you can use them with your hardware wallet, etc)
 - All BIP39-2039 mnemonics can be shared with SSS, where the *shares are also valid BIP39-2039 mnemonics* (and therefore also valid BIP39 mnemonics)
 - BIP39-2039 mnemonics of length N are determined by the first N-1 words. So for example when creating a 24-word mnemonic you only get to choose 23 words. The last word is reserved as a special checksum.
@@ -30,7 +30,8 @@ print "Mnemonic:", mnemonic
 ```
 
 ```
-Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar',
+           'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
 
 The mnemonic can then be broken into three shares, which are themselves valid mnemonics
@@ -43,10 +44,10 @@ print "Shares:", shares
 ```
 Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
                     'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
-         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column', 'silver',
-                    'forest', 'extra', 'hand', 'neither', 'accident'],
-         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret', 'analyst',
-                    'pitch', 'private', 'control', 'vintage', 'absurd']}
+         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column',
+	            'silver', 'forest', 'extra', 'hand', 'neither', 'accident'],
+         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret',
+	            'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd']}
 ```
 
 Finally, the original mnemonic can be recovered from any two of the three shares
@@ -56,5 +57,6 @@ print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1
 ```
 
 ```
-Recovered from shares 1 and 2: Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+Recovered from shares 1 and 2: Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present',
+'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
