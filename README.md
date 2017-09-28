@@ -9,7 +9,7 @@ The code breaks up a mnemonic into three SSS shares that are also each themselve
 
 ## Details
 
-The package uses what we will call the 'BIP39-2039' mnemonics.
+The package uses what we will call 'BIP39-2039' mnemonics. BIP39-2039 mnemonics are BIP39 mnemonics with some extra properties
 
 - BIP39-2039 mnemonics use a dictionary of size 2039 (a prime number) instead of size 2048 (used in BIP39 mnemonics)
 - All BIP39-2039 mnemonics are valid BIP39 mnemonics (so you can use them with your hardware wallet, etc)
@@ -22,10 +22,10 @@ The blacklist: "year", "yellow", "you", "young", "youth", "zebra", "zero", "zone
 
 ## Examples
 
-You can use an existing mnemonic or create a new one
+It is easy to create a BIP39-2039 mnemonic
 
 ```
-mnemonic = generate_mnemonic(length=4)
+mnemonic = generate_mnemonic(length=12)
 print "Mnemonic:", mnemonic
 ```
 
@@ -34,7 +34,7 @@ Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar',
            'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
 
-The mnemonic can then be broken into three shares, which are themselves valid mnemonics
+Under the hood we are randomly choosing the first eleven of the twelve words (alternatively you can specify them yourself having chosen them any way you like). The twelfth word is a checksum determined by the first eleven. The mnemonic can then be broken into three shares, which are themselves valid mnemonics
 
 ```
 shares = mnemonic_to_shares(mnemonic)
@@ -50,13 +50,13 @@ Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
 	            'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd']}
 ```
 
-Finally, the original mnemonic can be recovered from any two of the three shares
+Recall that each of these shares is also a valid BIP39-2039 mnemonic! Finally, the original mnemonic can be recovered from any two of the three shares
 
 ```
 print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
 ```
 
 ```
-Recovered from shares 1 and 2: Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present',
-'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present','seminar',
+'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
