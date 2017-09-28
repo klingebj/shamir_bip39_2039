@@ -1,23 +1,29 @@
-from api import mnemonic_to_shares, shares_to_mnemonic
-from mnemonic import generate_mnemonic
+from api import mnemonic_to_shares, shares_to_mnemonic, generate_mnemonic, check_mnemonic_checksum
 
 mnemonic = generate_mnemonic(length=12)
 
 print "Mnemonic:", mnemonic
-#Mnemonic: ['session', 'quiz', 'swamp', 'quantum']
+#Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 
 shares = mnemonic_to_shares(mnemonic)
 
+print "Shares valid mnemonics?", check_mnemonic_checksum(shares['share1']) and check_mnemonic_checksum(shares['share2']) and check_mnemonic_checksum(shares['share3'])
+#Shares valid mnemonics? True
+
 print "\nShares:", shares
-#Shares: {'share1': ['lazy', 'dizzy', 'viable', 'impulse'],
-#         'share2': ['decade', 'soon', 'arrive', 'crush'],
-#         'share3': ['various', 'garbage', 'caution', 'walnut']}
+#Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
+#                    'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
+#         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column', 'silver',
+#                    'forest', 'extra', 'hand', 'neither', 'accident'],
+#         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret', 'analyst',
+#                    'pitch', 'private', 'control', 'vintage', 'absurd']}
 
 print "\nRecovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
-#Recovered from shares 1 and 2: ['session', 'quiz', 'swamp', 'quantum']
+#Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 
 print "Recovered from shares 1 and 3:", shares_to_mnemonic(share1=shares['share1'], share3=shares['share3'])
-#Recovered from shares 1 and 3: ['session', 'quiz', 'swamp', 'quantum']
+#Recovered from shares 1 and 3: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 
 print "Recovered from shares 2 and 3:", shares_to_mnemonic(share2=shares['share2'], share3=shares['share3'])
-#Recovered from shares 2 and 3: ['session', 'quiz', 'swamp', 'quantum']
+#Recovered from shares 2 and 3: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+

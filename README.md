@@ -1,13 +1,22 @@
-# shamir_bip39
-A simple implementation of the 2-out-of-3 Shamir's secret sharing algorithm (SSSA) for BIP39-like mnemonics
+# shamir_bip39_2039
+A simple tool for generating and manipulating BIP39 mnemonics with special properties that make it easy to use 2-out-of-3 Shamir's secret sharing algorithm (SSS) where the *shares are also each themselves valid BIP39 mnemonics*.
 
 ## Overview
 
-Rather than full-featured this is meant to be a short and extremely simple implementation that you can (actually) audit in its entirety and trust with your private keys. The only libraries used are *sys* and *random*, and these are only used for random number generation. If you don't trust your system RNG you can supply your own.
+Rather than full-featured this is meant to be a short and extremely simple implementation that you can (actually) audit in its entirety and trust with your private keys. The only external libraries used are *sys*, *random*, *hashlib.sha256*. If you don't trust your system RNG you can supply your own.
 
-The code breaks up a mnemonic into three SSSA shares that are also each themselves valid mnemonics. Someone coming into possession of a share will have no immediate indication of whether it is a share or is itself a mnemonic. Bonus: you can use the share-as-mnemonic property to create trip-wires to reveal if a share has been compromised (by funding a honeypot at a corresponding BIP39 bitcoin address, for example) 
+The code breaks up a mnemonic into three SSS shares that are also each themselves valid mnemonics. Someone coming into possession of a share will have no immediate indication of whether it is a share or is itself a mnemonic. **Bonus**: you can use the share-as-mnemonic property to create trip-wires to reveal if a share has been compromised (by funding a honeypot at a corresponding BIP39 bitcoin address, for example) 
 
-**NB**: The following words are excluded because it is easier to use a very simple version of SSSA with a dictionary of size 2039 (a prime number) than of size 2048 (used in BIP39 mnemonics). Make sure your mnemonics don't include these words. Code for generating compatible mnemonics is included.
+## Details
+
+The package uses what we will call the 'BIP39-2039' mnemonics.
+
+- BIP39-2039 mnemonics use a dictionary of size 2039 (a prime number) than of size 2048 (used in BIP39 mnemonics)
+- All BIP39-2039 mnemonics are valid BIP39 mnemonics (so you can use them with your hardware wallet, etc)
+- All BIP39-2039 mnemonics can be shared with SSS, where the *shares are also valid BIP39-2039 mnemonics* (and therefore also valid BIP39 mnemonics)
+- BIP39-2039 mnemonics of length N are determined by the first N-1 words. So for example when creating a 24-word mnemonic you only get to choose 23 words. The last word is reserved as a special checksum.
+
+**NB**: The following words are excluded from the BIP39-2039 dictionary because it is easier to use a very simple version of SSS with a dictionary of size 2039 (a prime number) than of size 2048 (used in BIP39 mnemonics). Make sure your mnemonics don't include these words. Code for generating compatible mnemonics is included.
 
 The blacklist: "year", "yellow", "you", "young", "youth", "zebra", "zero", "zone", and "zoo"
 
@@ -21,10 +30,10 @@ print "Mnemonic:", mnemonic
 ```
 
 ```
-Mnemonic: ['session', 'quiz', 'swamp', 'quantum']
+Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
 
-The mnemonic can then be broken into three shares, which are themselves mnemonics
+The mnemonic can then be broken into three shares, which are themselves valid mnemonics
 
 ```
 shares = mnemonic_to_shares(mnemonic)
@@ -32,21 +41,20 @@ print "Shares:", shares
 ```
 
 ```
-Shares: {'share1': ['lazy', 'dizzy', 'viable', 'impulse'],
-         'share2': ['decade', 'soon', 'arrive', 'crush'],
-         'share3': ['various', 'garbage', 'caution', 'walnut']}
+Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
+                    'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
+         'share2': ['lava', 'power', 'throw', 'demise', 'safe', 'column', 'silver',
+                    'forest', 'extra', 'hand', 'neither', 'accident'],
+         'share3': ['teach', 'initial', 'aware', 'fan', 'give', 'regret', 'analyst',
+                    'pitch', 'private', 'control', 'vintage', 'absurd']}
 ```
 
 Finally, the original mnemonic can be recovered from any two of the three shares
 
 ```
 print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
-print "Recovered from shares 1 and 3:", shares_to_mnemonic(share1=shares['share1'], share3=shares['share3'])
-print "Recovered from shares 2 and 3:", shares_to_mnemonic(share2=shares['share2'], share3=shares['share3'])
 ```
 
 ```
-Recovered from shares 1 and 2: ['session', 'quiz', 'swamp', 'quantum']
-Recovered from shares 1 and 3: ['session', 'quiz', 'swamp', 'quantum']
-Recovered from shares 2 and 3: ['session', 'quiz', 'swamp', 'quantum']
+Recovered from shares 1 and 2: Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
