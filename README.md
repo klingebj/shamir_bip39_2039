@@ -1,5 +1,5 @@
 # shamir_bip39_2039
-A simple tool for generating and manipulating BIP39 mnemonics with special properties that make it easy to use 2-out-of-3 Shamir's secret sharing algorithm (SSS) where the *shares are also each themselves valid BIP39 mnemonics*.
+A simple tool for generating and manipulating BIP39 mnemonics with special properties that make it easy to use the 2-out-of-3 Shamir's secret sharing algorithm (SSS) where the *shares are also each themselves valid BIP39 mnemonics*.
 
 ## Overview
 
@@ -13,7 +13,7 @@ The package uses what we will call 'BIP39-2039' mnemonics. BIP39-2039 mnemonics 
 
 - BIP39-2039 mnemonics use a dictionary of size 2039 (a prime number) instead of size 2048 (used in BIP39 mnemonics)
 - All BIP39-2039 mnemonics are valid BIP39 mnemonics (so you can use them with your hardware wallet, etc)
-- All BIP39-2039 mnemonics can be shared with SSS, where the *shares are also valid BIP39-2039 mnemonics* (and therefore also valid BIP39 mnemonics)
+- All BIP39-2039 mnemonics can be easily shared with SSS, where the *shares are also valid BIP39-2039 mnemonics* (and therefore also valid BIP39 mnemonics)
 - BIP39-2039 mnemonics of length N are determined by the first N-1 words. So for example when creating a 24-word mnemonic you only get to choose 23 words. The last word is reserved as a special checksum.
 
 **NB**: The following words are excluded from the BIP39-2039 dictionary because it is easier to use a very simple version of SSS with a dictionary of size 2039 (a prime number) than of size 2048 (used in BIP39 mnemonics). Make sure your mnemonics don't include these words. Code for generating compatible mnemonics is included.
@@ -50,7 +50,7 @@ Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
 	            'silver', 'forest', 'extra', 'hand', 'neither', 'accident']}
 ```
 
-Recall that each of these shares is also a valid BIP39-2039 mnemonic! Finally, the original mnemonic can be recovered from any two of the three shares
+Recall that each of these shares is also a valid BIP39-2039 mnemonic! You can use them as you would any other BIP39 mnemonic. Finally, the original mnemonic can be recovered from any two of the three shares
 
 ```
 print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
@@ -58,5 +58,5 @@ print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1
 
 ```
 Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present','seminar',
-'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+                                'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
