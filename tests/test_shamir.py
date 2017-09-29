@@ -1,6 +1,7 @@
 from shamir_bip39_2039 import shamir
 from shamir_bip39_2039 import rng
 
+
 def test_secret_to_points():
 
     r = rng.LCG()
