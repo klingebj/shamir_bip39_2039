@@ -1,5 +1,5 @@
 # shamir_bip39_2039
-A simple tool for generating and manipulating BIP39 mnemonics with special properties that make it easy to use the 2-out-of-3 Shamir's secret sharing algorithm (SSS) where the *shares are also each themselves valid BIP39 mnemonics*.
+A simple tool for generating and manipulating [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonics with special properties that make it easy to use the 2-out-of-3 [Shamir's secret sharing algorithm (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) where the *shares are also each themselves valid BIP39 mnemonics*.
 
 ## Overview
 
