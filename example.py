@@ -1,8 +1,7 @@
 from shamir_bip39_2039.api import mnemonic_to_shares, shares_to_mnemonic, generate_mnemonic, check_mnemonic_checksum
 
 mnemonic = generate_mnemonic(length=12)
-mnemonic = ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar',
-            'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
+
 print "Mnemonic:", mnemonic
 # Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 
