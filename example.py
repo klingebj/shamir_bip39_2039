@@ -1,7 +1,8 @@
-from api import mnemonic_to_shares, shares_to_mnemonic, generate_mnemonic, check_mnemonic_checksum
+from shamir_bip39_2039.api import mnemonic_to_shares, shares_to_mnemonic, generate_mnemonic, check_mnemonic_checksum
 
 mnemonic = generate_mnemonic(length=12)
-
+mnemonic = ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar',
+            'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 print "Mnemonic:", mnemonic
 # Mnemonic: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 
@@ -11,12 +12,13 @@ print "Shares valid mnemonics?", check_mnemonic_checksum(shares['share1']) and c
 # Shares valid mnemonics? True
 
 print "\nShares:", shares
-# Shares: {'share1': ['document', 'direct', 'dilemma', 'hero', 'almost', 'device',
-#                     'effort', 'useful', 'all', 'visual', 'fetch', 'absent'],
-#          'share2': ['teach', 'initial', 'aware', 'fan', 'give', 'regret',
-#                     'analyst', 'pitch', 'private', 'control', 'vintage', 'absurd'],
-#          'share3': ['lava', 'power', 'throw', 'demise', 'safe', 'column',
-#                     'silver', 'forest', 'extra', 'hand', 'neither', 'accident']}
+# Shares: {'share1': ['tornado', 'actress', 'measure', 'service', 'learn', 'blush',
+#                    'space', 'because', 'drum', 'hockey', 'negative', 'absorb'],
+#         'share2': ['client', 'win', 'pond', 'aisle', 'fatal', 'hockey',
+#                    'bronze', 'twelve', 'charge', 'bubble', 'income', 'access'],
+#         'share3': ['humor', 'visual', 'shield', 'ecology', 'choose', 'scare',
+#                    'gun', 'sell', 'another', 'snack', 'eye', 'able']}
+
 
 print "\nRecovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])
 # Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present', 'seminar', 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
