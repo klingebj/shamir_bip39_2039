@@ -15,13 +15,10 @@ def bits_to_mnemonic(bitstring):
     return [word_dict[int(bitstring[(i * 11):(i + 1) * 11], 2) + 1] for i in range(n)]
 
 
-def compute_mnemonic_lengths(len_bits):
-    """Compute valid lengths for the components of mnemonics"""
+def compute_checksum_length(len_bits):
+    """Compute length of checksum"""
 
-    len_cs = len_bits / 32
-    len_ms = (len_cs + len_bits) / 11
-
-    return len_ms, len_cs
+    return len_bits / 32
 
 
 def compute_checksum(bitstring, len_checksum):
@@ -40,21 +37,24 @@ def check_mnemonic_checksum(mnemonic):
 
     bits = mnemonic_to_bits(mnemonic)
     len_bits = len(bits)
-    len_ms, len_cs = compute_mnemonic_lengths(len_bits)
+    len_cs = compute_checksum_length(len_bits)
 
     return compute_checksum(bits[:(len_bits - len_cs)], len_cs) == bits[-len_cs:]
 
 
-def complete_partial_mnemonic(partial_mnemonic):
-    """Append the checksum to a partial mnemonic"""
+def pad_bitstring(bits):
+    """If necessary add trailing 0s to the bitstring"""
 
-    bits = mnemonic_to_bits(partial_mnemonic)
     len_bits = len(bits) + 11
-    len_ms, len_cs = compute_mnemonic_lengths(len_bits)
+    len_cs = compute_checksum_length(len_bits)
 
-    bits += '0' * (11 - len_cs)
-    checksum = compute_checksum(bits, len_cs)
-    mnemonic = bits_to_mnemonic(bits + checksum)
-    assert check_mnemonic_checksum(mnemonic)
+    return bits + '0' * (11 - len_cs)
 
-    return mnemonic
+
+def append_checksum(bits):
+    """Append the checksum to bitstring (pad if necessary)"""
+
+    bits = pad_bitstring(bits)
+    len_cs = compute_checksum_length(len(bits))
+
+    return bits + compute_checksum(bits, len_cs)
