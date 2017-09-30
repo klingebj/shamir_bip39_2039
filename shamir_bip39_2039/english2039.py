@@ -1,3 +1,5 @@
+# See https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt
+
 word_dict = {
     1: "abandon",
     2: "ability",
@@ -2037,6 +2039,19 @@ word_dict = {
     2036: "wrist",
     2037: "write",
     2038: "wrong",
-    2039: "yard"}
+    2039: "yard",
+    2040: "year",  # blacklist
+    2041: "yellow",  # blacklist
+    2042: "you",  # blacklist
+    2043: "young",  # blacklist
+    2044: "youth",  # blacklist
+    2045: "zebra",  # blacklist
+    2046: "zero",  # blacklist
+    2047: "zone",  # blacklist
+    2048: "zoo"}  # blacklist
 
+for i in range(2040, 2049):
+    word_dict.pop(i)
+
+assert len(word_dict) == 2039
 word_inv_dict = {v: k for k, v in word_dict.items()}
