@@ -35,9 +35,12 @@ class LCG(RNG):
         if max_int is None:
             max_int = sys.maxint
         self.max_int = max_int
-        self.seed = 42
+        self.seed = -1
 
     def random_int(self):
         """Generate a random integer"""
+        if self.seed < 0:
+            print "USING LCG! DO NOT USE FOR GENERATING KEYS!"
+            self.seed = 42
         self.seed = (self.seed * 1664525 + 1013904223) % 2**32
         return self.seed % self.max_int
