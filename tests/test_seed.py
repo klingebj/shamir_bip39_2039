@@ -2,6 +2,7 @@ from shamir_bip39_2039 import seed
 from shamir_bip39_2039 import mnemonic
 import binascii
 
+
 def test_seed():
 
     m = 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about'.split(
@@ -21,4 +22,5 @@ def test_seed():
                     "panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside": "72be8e052fc4919d2adf28d5306b5474b0069df35b02303de8c1729c9538dbb6fc2d731d5f832193cd9fb6aeecbc469594a70e3dd50811b5067f3b88b28c3e8d"}
 
     for mnemonic in test_vectors:
-        assert test_vectors[mnemonic] == binascii.hexlify(seed.mnemonic_to_seed(mnemonic.split(' '), 'TREZOR'))
+        assert test_vectors[mnemonic] == binascii.hexlify(
+            seed.mnemonic_to_seed(mnemonic.split(' '), 'TREZOR'))

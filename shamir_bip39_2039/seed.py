@@ -2,6 +2,7 @@ from hashlib import pbkdf2_hmac
 from mnemonic import allowed_mnemonic_lengths
 from checksum import check_mnemonic_checksum
 
+
 def mnemonic_to_seed(mnemonic, passphrase=b''):
 
     # Based on Vitalik's code
