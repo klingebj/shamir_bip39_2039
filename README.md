@@ -3,7 +3,7 @@ A simple tool for generating and manipulating [BIP39](https://github.com/bitcoin
 
 ## Overview
 
-Rather than full-featured this is meant to be a short and extremely simple implementation that you can (actually) audit in its entirety and trust with your private keys. The only external libraries used are *sys*, *random*, *hashlib.sha256*. If you don't trust your system RNG you can supply your own.
+Rather than full-featured this is meant to be a short and extremely simple implementation that you can (actually) audit in its entirety and trust with your private keys. The only external libraries used are *sys*, *random*, *hashlib*, and *binascii*. If you don't trust your system RNG you can supply your own.
 
 The code breaks up a mnemonic into three SSS shares that are also each themselves valid mnemonics. Someone coming into possession of a share will have no immediate indication of whether it is a share or is itself a mnemonic. **Bonus**: you can use the share-as-mnemonic property to create trip-wires to reveal if a share has been compromised (by funding a honeypot at a corresponding BIP39 bitcoin address, for example) 
 
