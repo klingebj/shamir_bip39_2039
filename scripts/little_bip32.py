@@ -1,9 +1,9 @@
-# Simple script for generating (hardened) BIP32 addresses from a mnemonic
+# Simple script for generating (hardened) BIP32 addresses from a mnemonic. Require additional libraries.
 
 # https://github.com/vbuterin/pybitcointools
 import bitcoin as btc
 # https://github.com/klingebj/shamir_bip39_2039
-from seed import mnemonic_to_seed
+from shamir_bip39_2039 import seed
 import binascii
 import hashlib
 import argparse
@@ -47,7 +47,8 @@ def key_address(masterkey, path):
 def mnemonic_to_key(mnemonic, passphrase, path):
     """Return the (hex) private key"""
 
-    masterkey = btc.bip32_master_key(mnemonic_to_seed(mnemonic, passphrase))
+    masterkey = btc.bip32_master_key(
+        seed.mnemonic_to_seed(mnemonic, passphrase))
     key, _ = key_address(masterkey, path)
     return key
 
@@ -55,7 +56,8 @@ def mnemonic_to_key(mnemonic, passphrase, path):
 def mnemonic_to_address(mnemonic, passphrase, path):
     """Return the (compressed) bitcoin address"""
 
-    masterkey = btc.bip32_master_key(mnemonic_to_seed(mnemonic, passphrase))
+    masterkey = btc.bip32_master_key(
+        seed.mnemonic_to_seed(mnemonic, passphrase))
     _, addr = key_address(masterkey, path)
     return addr
 
@@ -84,7 +86,9 @@ def test_addresses():
                         12, 0, 90], '1Kfm6D7oYtEijcqRiEkTA6SnMoH6o3uWnj', 'TREZOR'),
                     ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside", [
                         12, 0, 90], '17FngVD55Rh6qkxcwpwadV29KuydXPzR57', ''),
-                    ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside", [12, 0, 90], '1GQsb7tCBAKvvxRXwv9ixD67NMuSaeRGeM', 'ab8arstoienA$aoarsto_AST8405582811-arstarfcf292dnastratoarston4uq03gda')]
+                    ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside", [
+                     12, 0, 90], '1GQsb7tCBAKvvxRXwv9ixD67NMuSaeRGeM', 'ab8arstoienA$aoarsto_AST8405582811-arstarfcf292dnastratoarston4uq03gda'),
+                    ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside", [12, 0, 90], '13fEzRvL63LZES8stDQGYiGH8i1ME496Yo', 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9')]
 
     for (mnemonic, path, addr, passphrase) in test_vectors:
         assert addr == mnemonic_to_address(
