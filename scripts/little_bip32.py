@@ -1,5 +1,8 @@
 # Simple script for generating (hardened) BIP32 addresses from a mnemonic. Require additional libraries.
 
+# Example: python scripts/little_bip32.py $mnemonic $passphrase 0 0 0
+
+
 # https://github.com/vbuterin/pybitcointools
 import bitcoin as btc
 # https://github.com/klingebj/shamir_bip39_2039
