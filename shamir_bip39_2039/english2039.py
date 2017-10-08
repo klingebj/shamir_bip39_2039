@@ -5,8 +5,8 @@ import pkg_resources
 words = pkg_resources.resource_string(
     'shamir_bip39_2039', 'english.txt').split('\n')[:2039]
 
-blacklist = ["year", "yellow", "you",
-             "young""youth", "zebra", "zero", "zone", "zoo"]
+blacklist = ["year", "yellow", "you", "young",
+             "youth", "zebra", "zero", "zone", "zoo"]
 
 for word in blacklist:
     assert word not in words
