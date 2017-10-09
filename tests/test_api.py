@@ -8,12 +8,20 @@ def test_api():
     r = rng.LCG()
     for length in mnemonic.allowed_mnemonic_lengths:
         for _ in range(100):
-            test_mnemonic = mnemonic.generate_mnemonic(
-                length, rng=r)
+            test_mnemonic = mnemonic.generate_mnemonic(length, rng=r)
             shares = api.mnemonic_to_shares(test_mnemonic, rng=r)
-            for u, v in zip(test_mnemonic, api.shares_to_mnemonic(share1=shares['share1'], share2=shares['share2'])):
+            for u, v in zip(test_mnemonic,
+                            api.shares_to_mnemonic(
+                                share1=shares['share1'],
+                                share2=shares['share2'])):
                 assert u == v
-            for u, v in zip(test_mnemonic, api.shares_to_mnemonic(share1=shares['share1'], share3=shares['share3'])):
+            for u, v in zip(test_mnemonic,
+                            api.shares_to_mnemonic(
+                                share1=shares['share1'],
+                                share3=shares['share3'])):
                 assert u == v
-            for u, v in zip(test_mnemonic, api.shares_to_mnemonic(share2=shares['share2'], share3=shares['share3'])):
+            for u, v in zip(test_mnemonic,
+                            api.shares_to_mnemonic(
+                                share2=shares['share2'],
+                                share3=shares['share3'])):
                 assert u == v

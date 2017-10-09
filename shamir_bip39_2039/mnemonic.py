@@ -7,9 +7,12 @@ allowed_mnemonic_lengths = [12, 15, 18, 21, 24]
 
 def generate_partial_mnemonic(length=23, rng=SystemRNG()):
 
-    assert (length + 1) in allowed_mnemonic_lengths, "Must choose valid mnemonic length"
+    assert (length +
+            1) in allowed_mnemonic_lengths, "Must choose valid mnemonic length"
 
-    return [word_dict[rng.random_int() % len(word_dict) + 1] for _ in range(length)]
+    return [
+        word_dict[rng.random_int() % len(word_dict) + 1] for _ in range(length)
+    ]
 
 
 def complete_partial_mnemonic(partial_mnemonic):

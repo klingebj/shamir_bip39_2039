@@ -12,7 +12,10 @@ def bits_to_mnemonic(bitstring):
     """Convert a bitstring to a mnemonic"""
 
     n = len(bitstring) / 11
-    return [word_dict[int(bitstring[(i * 11):(i + 1) * 11], 2) + 1] for i in range(n)]
+    return [
+        word_dict[int(bitstring[(i * 11):(i + 1) * 11], 2) + 1]
+        for i in range(n)
+    ]
 
 
 def compute_checksum_length(len_bits):
@@ -39,7 +42,8 @@ def check_mnemonic_checksum(mnemonic):
     len_bits = len(bits)
     len_cs = compute_checksum_length(len_bits)
 
-    return compute_checksum(bits[:(len_bits - len_cs)], len_cs) == bits[-len_cs:]
+    return compute_checksum(bits[:(len_bits - len_cs)],
+                            len_cs) == bits[-len_cs:]
 
 
 def pad_bitstring(bits):

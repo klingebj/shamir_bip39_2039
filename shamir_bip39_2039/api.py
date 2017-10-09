@@ -8,12 +8,18 @@ from checksum import check_mnemonic_checksum
 def mnemonic_to_shares(mnemonic, prime=2039, rng=SystemRNG()):
     """Compute the shares for a mnemonic"""
 
-    assert len(
-        mnemonic) in allowed_mnemonic_lengths, "Must choose valid mnemonic length"
+    assert len(mnemonic
+              ) in allowed_mnemonic_lengths, "Must choose valid mnemonic length"
     assert check_mnemonic_checksum(mnemonic)
-    shares = zip(*[secret_to_points(prime, word_inv_dict[word] - 1,
-                                    rng, include_x=False) for word in mnemonic])
-    return dict(zip(['share1', 'share2', 'share3'], [complete_partial_mnemonic([word_dict[i + 1] for i in share][:-1]) for share in shares]))
+    shares = zip(*[
+        secret_to_points(prime, word_inv_dict[word] - 1, rng, include_x=False)
+        for word in mnemonic
+    ])
+    return dict(
+        zip(['share1', 'share2', 'share3'], [
+            complete_partial_mnemonic([word_dict[i + 1] for i in share][:-1])
+            for share in shares
+        ]))
 
 
 def shares_to_mnemonic(share1=None, share2=None, share3=None, prime=2039):
@@ -23,7 +29,8 @@ def shares_to_mnemonic(share1=None, share2=None, share3=None, prime=2039):
         (share3 is None) == 1, "Must provide exactly two shares."
 
     shares = [[(i + 1, word_inv_dict[word] - 1) for word in share[:-1]]
-              for i, share in enumerate([share1, share2, share3]) if share is not None]
+              for i, share in enumerate([share1, share2, share3])
+              if share is not None]
 
     mnemonic = complete_partial_mnemonic(
         [word_dict[points_to_secret(prime, *w) + 1] for w in zip(*shares)])

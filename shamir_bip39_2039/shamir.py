@@ -1,5 +1,4 @@
 from rng import SystemRNG
-
 """2-of-3 Shamir's secret sharing"""
 
 
@@ -28,8 +27,9 @@ def points_to_secret(prime, *points):
     abs_delta = abs(delta)
     delta_sign = 1 if delta > 0 else -1
 
-    lagrange_numerator = (
-        (points[0][0] * points[1][1] - points[1][0] * points[0][1]) * delta_sign) % prime
+    lagrange_numerator = ((
+        points[0][0] * points[1][1] - points[1][0] * points[0][1]) * delta_sign
+                         ) % prime
 
     if lagrange_numerator % abs_delta == 0:
         return lagrange_numerator / abs_delta

@@ -11,6 +11,8 @@ def mnemonic_to_seed(mnemonic, passphrase=b''):
     assert check_mnemonic_checksum(mnemonic)
 
     def pbkdf2_hmac_sha256(password, salt, iters=2048):
-        return pbkdf2_hmac(hash_name='sha512', password=password, salt=salt, iterations=iters)
+        return pbkdf2_hmac(
+            hash_name='sha512', password=password, salt=salt, iterations=iters)
 
-    return pbkdf2_hmac_sha256(password=' '.join(mnemonic), salt=b'mnemonic' + passphrase)
+    return pbkdf2_hmac_sha256(
+        password=' '.join(mnemonic), salt=b'mnemonic' + passphrase)
