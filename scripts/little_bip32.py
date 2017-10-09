@@ -21,6 +21,8 @@ parser.add_argument('path', type=int, nargs=3,
                     help='BIP32 derivation path (e.g. 0 0 0)')
 parser.add_argument('--key', dest='return_key',
                     action='store_true', help='Return the (hex) private key')
+parser.add_argument('--args', dest='print_args',
+                    action='store_true', help='Print input to script')
 
 
 def child(x, i):
@@ -104,6 +106,14 @@ if __name__ == '__main__':
     test_addresses()
 
     args = parser.parse_args()
+
+    if args.print_args:
+        print "Mnemonic:", args.mnemonic
+        print "Mnemonic length:", len(args.mnemonic.split(' ')), '\n'
+        print "Passphrase:", args.passphrase
+        print "Passphrase length:", len(args.passphrase), '\n'
+        print "Path:", args.path
+        print "Path length:", len(args.path), '\n'
 
     if args.return_key:
         print mnemonic_to_key(args.mnemonic.split(' '), args.passphrase, args.path)
