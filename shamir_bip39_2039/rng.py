@@ -40,7 +40,7 @@ class LCG(RNG):
     def random_int(self):
         """Generate a random integer"""
         if self.seed < 0:
-            print "USING LCG! DO NOT USE FOR GENERATING KEYS!"
+            print "USING LCG FOR TESTS! DO NOT USE FOR GENERATING REAL KEYS!"
             self.seed = 42
         self.seed = (self.seed * 1664525 + 1013904223) % 2**32
         return self.seed % self.max_int
