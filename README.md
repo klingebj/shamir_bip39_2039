@@ -60,3 +60,15 @@ print "Recovered from shares 1 and 2:", shares_to_mnemonic(share1=shares['share1
 Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present','seminar',
                                 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
+
+## BIP32 addresses
+
+For convenience, a simple BIP32 key/address generator is included. You can use this to manage addresses for a poor man's BIP32 wallet.
+
+```
+python scripts/little_bip32.py $mnemonic $passphrase 0 0 0
+```
+
+```
+1EbiwdYNzJ9jyJVsnEKkgV8cmi5iDvDMiS
+```
