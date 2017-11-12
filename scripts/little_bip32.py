@@ -24,6 +24,11 @@ parser.add_argument(
     action='store_true',
     help='Return the (hex) private key')
 parser.add_argument(
+    '--wif',
+    dest='return_wif',
+    action='store_true',
+    help='Return the (wif) private key')
+parser.add_argument(
     '--args',
     dest='print_args',
     action='store_true',
@@ -68,6 +73,13 @@ def mnemonic_to_key(mnemonic, passphrase, path):
     return key
 
 
+def mnemonic_to_wif(mnemonic, passphrase, path):
+    """Return the (wif) private key"""
+
+    return btc.encode_privkey(
+        mnemonic_to_key(mnemonic, passphrase, path), 'wif_compressed')
+
+
 def mnemonic_to_address(mnemonic, passphrase, path):
     """Return the (compressed) bitcoin address"""
 
@@ -106,7 +118,7 @@ def test_addresses(show_tests=False):
         ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside",
          [12, 0, 90], '1GQsb7tCBAKvvxRXwv9ixD67NMuSaeRGeM',
          'ab8arstoienA$aoarsto_AST8405582811-arstarfcf292dnastratoarston4uq03gda'
-        ),
+         ),
         ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside",
          [12, 0, 90], '13fEzRvL63LZES8stDQGYiGH8i1ME496Yo',
          'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'),
@@ -147,7 +159,10 @@ if __name__ == '__main__':
         print "Path:", args.path
         print "Path length:", len(args.path), '\n'
 
-    if args.return_key:
+    if args.return_wif:
+        print mnemonic_to_wif(
+            args.mnemonic.split(' '), args.passphrase, args.path)
+    elif args.return_key:
         print mnemonic_to_key(
             args.mnemonic.split(' '), args.passphrase, args.path)
     else:
