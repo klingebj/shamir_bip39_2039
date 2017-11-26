@@ -1,10 +1,12 @@
 # Simple script for generating (hardened) BIP32 addresses from a mnemonic. Require additional libraries.
 
-# Example: python scripts/little_bip32.py $mnemonic $passphrase 0 0 0
+# Example: python scripts/little_bip32.py --mnemonic $mnemonic --passphrase $passphrase --path 0 0 0
+# Example with BIP39-2039 shares: python scripts/little_bip32.py --share1 $share1 --share2 $share2 --passphrase $passphrase --path 0 0 0
 
 # https://github.com/vbuterin/pybitcointools
 import bitcoin as btc
 # https://github.com/klingebj/shamir_bip39_2039
+from shamir_bip39_2039.api import shares_to_mnemonic, check_mnemonic_checksum
 from shamir_bip39_2039 import seed
 import binascii
 import hashlib
@@ -14,10 +16,38 @@ parser = argparse.ArgumentParser(
     description='Generate BIP32 addresses from mnemonic')
 
 parser.add_argument(
-    'mnemonic', type=str, help='Mnemonic (space delimited string)')
-parser.add_argument('passphrase', type=str, help='BIP32 passphrase')
+    '--mnemonic',
+    type=str,
+    help='Mnemonic (space delimited string)',
+    default=None)
 parser.add_argument(
-    'path', type=int, nargs=3, help='BIP32 derivation path (e.g. 0 0 0)')
+    '--share1',
+    type=str,
+    help='Mnemonic share (space delimited string)',
+    default=None)
+parser.add_argument(
+    '--share2',
+    type=str,
+    help='Mnemonic share (space delimited string)',
+    default=None)
+parser.add_argument(
+    '--share3',
+    type=str,
+    help='Mnemonic share (space delimited string)',
+    default=None)
+parser.add_argument(
+    '--passphrase', type=str, help='BIP32 passphrase', default=None)
+parser.add_argument(
+    '--path',
+    type=int,
+    nargs=3,
+    required=True,
+    help='BIP32 derivation path (e.g. 0 0 0)')
+parser.add_argument(
+    '--sha256pass',
+    dest='sha256pass',
+    action='store_true',
+    help='Apply sha256 to passphrase before use')
 parser.add_argument(
     '--key',
     dest='return_key',
@@ -119,8 +149,8 @@ def test_addresses(show_tests=False):
          [12, 0, 90], '1GQsb7tCBAKvvxRXwv9ixD67NMuSaeRGeM',
          'ab8arstoienA$aoarsto_AST8405582811-arstarfcf292dnastratoarston4uq03gda'
          ),
-        ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost inside",
-         [12, 0, 90], '13fEzRvL63LZES8stDQGYiGH8i1ME496Yo',
+        ("panda eyebrow bullet gorilla call smoke muffin taste mesh discover soft ostrich alcohol speed nation flash devote level hobby quick inner drive ghost adult",
+         [12, 0, 90], '1Ho6ueo9mrtGfQgaPiNXDVs5Ecmfsp6V5e',
          'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'),
         ("craft tide sword holiday resemble process mammal hawk top seven reform thumb please blade million rich deny airport civil rough property torch raven beyond",
          [81, 22, 86], "1CBRcSVCj9YJ4SMceyWeHJSpokeEnRaS1N",
@@ -151,20 +181,41 @@ if __name__ == '__main__':
     # Be sure everything is working...
     test_addresses(args.show_tests)
 
+    #Check that either a mnemomic or two shares are provided
+    num_shares = (args.share1 is not None) + (args.share2 is not None) + (
+        args.share3 is not None)
+    assert (args.mnemonic is not None) or (
+        num_shares == 2), "Must provide mnemonic or two shares"
+
+    def split(x):
+        return None if x is None else x.split(' ')
+
+    if args.mnemonic is not None:
+        mnemonic = split(args.mnemonic)
+    else:
+        mnemonic = shares_to_mnemonic(
+            share1=split(args.share1),
+            share2=split(args.share2),
+            share3=split(args.share3))
+
+    assert check_mnemonic_checksum(mnemonic)
+
+    if args.sha256pass:
+        passphrase = hashlib.sha256(args.passphrase).hexdigest()
+    else:
+        passphrase = args.passphrase
+
     if args.print_args:
-        print "\nMnemonic:", args.mnemonic
-        print "Mnemonic length:", len(args.mnemonic.split(' ')), '\n'
-        print "Passphrase:", args.passphrase
-        print "Passphrase length:", len(args.passphrase), '\n'
+        print "\nMnemonic:", mnemonic
+        print "Mnemonic length:", len(mnemonic), '\n'
+        print "Passphrase:", passphrase
+        print "Passphrase length:", len(passphrase), '\n'
         print "Path:", args.path
         print "Path length:", len(args.path), '\n'
 
     if args.return_wif:
-        print mnemonic_to_wif(
-            args.mnemonic.split(' '), args.passphrase, args.path)
+        print mnemonic_to_wif(mnemonic, passphrase, args.path)
     elif args.return_key:
-        print mnemonic_to_key(
-            args.mnemonic.split(' '), args.passphrase, args.path)
+        print mnemonic_to_key(mnemonic, passphrase, args.path)
     else:
-        print mnemonic_to_address(
-            args.mnemonic.split(' '), args.passphrase, args.path)
+        print mnemonic_to_address(mnemonic, passphrase, args.path)
