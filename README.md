@@ -1,5 +1,5 @@
 # shamir_bip39_2039
-A simple tool for generating and manipulating [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonics with special properties that make it easy to use the 2-out-of-3 [Shamir's secret sharing algorithm (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) where the *shares are also each themselves valid BIP39 mnemonics*.
+A simple tool for generating and manipulating [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonics with special properties that make it easy to use the 2-out-of-3 [Shamir's secret sharing algorithm (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) where the *shares are also each themselves valid BIP39 mnemonics*. A simple script for generating BIP32 keys/addresses from mnemonics is also included. 
 
 ## Overview
 
@@ -61,9 +61,53 @@ Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present','se
                                 'lunar', 'derive', 'gauge', 'romance', 'relief', 'acid']
 ```
 
-## BIP32 addresses
+## BIP32 keys and addresses
 
-For convenience, a simple BIP32 key/address generator is included. You can use this to manage addresses for a poor man's BIP32 wallet.
+For convenience, a simple BIP32 key/address generator is included. You can use this to manage addresses for a poor bitcoiner's BIP32 wallet.
+
+# Example mnemonic with shares
+
+To illustrate, consider the following example mnemonic
+
+```
+echo $mnemonic
+```
+
+```
+abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about
+```
+
+with corresponding shares
+
+```
+echo $share1
+```
+
+```
+kid sock media sound liberty strike gap search sound tent because accident
+```
+
+```
+echo $share2
+```
+
+```
+virus outdoor bicycle pass actual quality salon lunch pass sausage chest above
+```
+
+and example passphrase
+
+```
+echo $passphrase
+```
+
+```
+TREZOR
+```
+
+# Address and key generation
+
+Using the mnemonic and passphrase you can easily compute the address for a BIP32 path
 
 ```
 python scripts/little_bip32.py --mnemonic $mnemonic --passphrase $passphrase --path 0 0 0
@@ -81,4 +125,24 @@ python scripts/little_bip32.py --share1 $share1 --share2 $share2 --passphrase $p
 
 ```
 1EbiwdYNzJ9jyJVsnEKkgV8cmi5iDvDMiS
+```
+
+You can also easily get the keys to sign transactions. As hex
+
+```
+python scripts/little_bip32.py --mnemonic $mnemonic --passphrase "TREZOR" --path 0 0 0 --key
+```
+
+```
+ca3dedf34c51bcd9e887e1e15403e26abfef6bb4c9b594d6cd778379f968545a
+```
+
+Or in WIF
+
+```
+python scripts/little_bip32.py --mnemonic $mnemonic --passphrase "TREZOR" --path 0 0 0 --wif
+```
+
+```
+L3zqqCVuvK9y1SY8X8rEMR4b6jn1Wps4HCGmBWoGuHVEPLwN6wv6
 ```
