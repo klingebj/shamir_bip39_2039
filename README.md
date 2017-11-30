@@ -65,7 +65,7 @@ Recovered from shares 1 and 2: ['patrol', 'ankle', 'hire', 'long', 'present','se
 
 For convenience, a simple BIP32 key/address generator is included. You can use this to manage addresses for a poor bitcoiner's BIP32 wallet.
 
-# Example mnemonic with shares
+### Example mnemonic with shares
 
 To illustrate, consider the following example mnemonic
 
@@ -105,7 +105,7 @@ echo $passphrase
 TREZOR
 ```
 
-# Address and key generation
+### Address and key generation
 
 Using the mnemonic and passphrase you can easily compute the address for a BIP32 path
 
